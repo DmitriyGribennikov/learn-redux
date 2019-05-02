@@ -1,6 +1,11 @@
 import React from  'react';
 import TodoItem from './TodoItem';
 
+//styles
+// eslint-disable-next-line
+import styles from './todolist.scss';
+
+
 class TodoList extends React.Component {
 
   state = {
@@ -12,26 +17,28 @@ class TodoList extends React.Component {
   }
 
   handleClick = () => {
-    this.props.add({
+    if (this.state.item){
+      this.props.add({
         title: this.state.item
-    })  
-    console.log( `item  ${this.state.item} will be saved!`)
+      }) 
+    }
+    this.setState({
+      item: ""
+    })
   }
 
   render() {
     const { todos } = this.props; 
+    console.log(todos)
     return <div>
-        <ul>
+        <ol className="todolist">
             TODO LIST:
-            {
-                todos.map(todoItem => <TodoItem key={todoItem.id} item={todoItem} />)
-            }
-        
-        </ul>
-        <input type='text' value={this.state.item} onChange={this.handleChange} />
+            { todos.map(todoItem => <TodoItem key={todoItem.id} item={todoItem} />) }
+        </ol>
+        <br />
+        <input type='text' placeholder="type your todos heare" value={this.state.item} onChange={this.handleChange} />
         <button onClick={this.handleClick}>Add Todo Item </button>
     </div>
-    
   }
 }
 
