@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TodoList from '../components/TodoList';
 import {
-    add
+    add,
+    del,
+    edit,
+    changeStatus
 } from '../actions/TodoActions';
 
 // Container component - вся его задача - это только подключиться к Store c помощью connect, взять 
@@ -15,7 +18,12 @@ const mapStateToProps = state => {
 }
   
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ add }, dispatch)
+    return bindActionCreators(
+      { add,
+        del,
+        edit,
+        changeStatus
+       }, dispatch)
 }
 
 class TodoListContainer extends React.Component {
