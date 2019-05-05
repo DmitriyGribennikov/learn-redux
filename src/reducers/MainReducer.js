@@ -20,46 +20,53 @@ const defaultState = {
 }
 
 // это замена сервера
-const generateTodoItem = (title, items) => ({
+const generateTodoItem = (title, items) => {
+  console.log("MainRed - funk generateTodoItem")
+   return({
   id: items.length,
   title: title,
   status: STATUS_NOT_READY
 })
+}
 
-const delTodoItem = (id, todos) => {
-  return     console.log(id, todos)
+const delTodoItem = (title, items) => {
+  console.log("MainRed - funk delTodoItem")
+  return     
   
 }
 
 // мы сразу вытащили из объекта action поля type & data при помощи деструкции
 //const todoReducer = (state = defaultState, action) => {
-const todoReducer = (state = defaultState, {type, data, id}) => {
-    switch(type) {
-        case ADD_TODO:            
+const todoReducer = (state = defaultState, action) => {
+    switch(action.type) {
+        case ADD_TODO: 
+        console.log("MainRed - add")           
             return {
               ...state,
               //создаем новый массив todos в который вмерживаем старые элементы и новый который мы добавили
-              todos: [...state.todos, generateTodoItem(data.title, state.todos)]
+              todos: [...state.todos, generateTodoItem(action.data.title, state.todos)]
             };
-        case  DEL_TODO:
+        case DEL_TODO:
+        console.log("MainRed - del")
             return {
               ...state,
               //создаем новый массив todos в который вмерживаем старые элементы и новый который мы добавили
-              todos: [ delTodoItem(id, ...state.todos)]
+              todos: [ delTodoItem(action.title, action.items)]
             }
         case EDIT_TODO:
-            return {
+         console.log("MainRed - edit")
+            return {   
 
             }
         case CHANGE_STATUS_TODO:
+         console.log("MainRed - change")
             return {
-
+             
             }
         default: 
             return state;
     }
 }
-
 
 const todoApp = combineReducers({
   todoReducer

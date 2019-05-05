@@ -28,15 +28,14 @@ class TodoList extends React.Component {
   }
 
   render() {
-    const { todos } = this.props; 
-    console.log(todos)
+    const { todos } = this.props;
     return <div>
         <ol className="todolist">
             TODO LIST:
             { todos.map(todoItem => <TodoItem key={todoItem.id} item={todoItem} />) }
         </ol>
         <br />
-        <input type='text' placeholder="type your todos heare" value={this.state.item} onChange={this.handleChange} />
+        <input type='text' placeholder="type your todos heare" value={this.state.item} onChange={this.handleChange}/>
         <button onClick={this.handleClick}>Add Todo Item </button>
     </div>
   }
