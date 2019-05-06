@@ -29,11 +29,11 @@ const generateTodoItem = (title, items) => {
 })
 }
 
-const delTodoItem = (title, items) => {
-  console.log("MainRed - funk delTodoItem")
-  return     
+// const delTodoItem = (title, items) => {
+//   console.log("MainRed - funk delTodoItem")
+//   return     
   
-}
+// }
 
 // мы сразу вытащили из объекта action поля type & data при помощи деструкции
 //const todoReducer = (state = defaultState, action) => {
@@ -49,20 +49,18 @@ const todoReducer = (state = defaultState, action) => {
         case DEL_TODO:
         console.log("MainRed - del")
             return {
-              ...state,
-              //создаем новый массив todos в который вмерживаем старые элементы и новый который мы добавили
-              todos: [ delTodoItem(action.title, action.items)]
-            }
+              ...state, id: action.id
+            };
         case EDIT_TODO:
          console.log("MainRed - edit")
             return {   
 
-            }
+            };
         case CHANGE_STATUS_TODO:
          console.log("MainRed - change")
             return {
              
-            }
+            };
         default: 
             return state;
     }

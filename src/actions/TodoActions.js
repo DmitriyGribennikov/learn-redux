@@ -14,12 +14,12 @@ export const add = (todoItem) => {
     }
 }
 
-export const del = (todoItem) => {
+export const del = (id) => {
     console.log("TodoActions - del")
     //console.log(todoItem)
     return {
         type: DEL_TODO,
-        data: todoItem
+        id
     }
 }
 

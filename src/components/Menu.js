@@ -1,5 +1,5 @@
 import React from "react";
-import { del, edit, changeStatus } from "../actions/TodoActions"
+import { del, edit, changeStatus } from "../actions/TodoActions";
 
 class Menu extends React.Component {
     constructor(props){
