@@ -14,17 +14,17 @@ class Menu extends React.Component {
         })
         switch (e.target.id) {
             case "Delet_ToDos":
-            console.log('del')
+            //console.log('del')
                 del( 1
                 );
             break;
             case "Edit_ToDos":
-            console.log("edit")
+            //console.log("edit")
                 edit( 2
                 );
             break;
             case "Done!":
-            console.log("done")
+            //console.log("done")
                 changeStatus( 3
                 );
             break;
@@ -50,6 +50,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-    () => {},
+    null,
     mapDispatchToProps
     )(Menu)
