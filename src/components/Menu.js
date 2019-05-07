@@ -1,12 +1,11 @@
 import React from "react";
 import { del, edit, changeStatus } from "../actions/TodoActions"
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class Menu extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            menuId : ""
-        }
+    state = {
+        menuId: ""
     }
 
     handleClick = (e) => {
@@ -15,17 +14,17 @@ class Menu extends React.Component {
         })
         switch (e.target.id) {
             case "Delet_ToDos":
-            //console.log('del')
-                del( {title: this.state.item}
+            console.log('del')
+                del( 1
                 );
             break;
             case "Edit_ToDos":
-            //console.log("edit")
+            console.log("edit")
                 edit( 2
                 );
             break;
             case "Done!":
-            //console.log("done")
+            console.log("done")
                 changeStatus( 3
                 );
             break;
@@ -42,4 +41,15 @@ class Menu extends React.Component {
     }
 }
 
-export default Menu;
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(
+    {del,
+    edit,
+    changeStatus
+    }, dispatch)
+}
+
+export default connect(
+    //() => {},
+    mapDispatchToProps
+    )(Menu)
