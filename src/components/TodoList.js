@@ -29,6 +29,7 @@ class TodoList extends React.Component {
 
   render() {
     const { todos } = this.props;
+    //const { todos, del, edit, changeStatus } = this.props;      //Может раскоментить
     return <div>
         <ol className="todolist">
             TODO LIST:

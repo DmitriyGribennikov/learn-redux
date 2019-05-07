@@ -1,5 +1,12 @@
 import React from  'react';
 import Menu from './Menu'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+    del, 
+    edit,
+    changeStatus
+} from '../actions/TodoActions';
 
 class TodoItem extends React.Component {
   constructor(props){
@@ -24,12 +31,26 @@ class TodoItem extends React.Component {
     //console.log (item)
     return <li onClick = { this.handleClick}>   
         { item.title } : { item.status }  
-        <Menu display={this.state.display}/>
+        <Menu 
+          del={this.props.del}
+          edit={this.props.edit}
+          changeStatus={this.props.changeStatus}
+          display={this.state.display}/>
     </li>
   }
 }
 
-export default TodoItem;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {del,
+    edit,
+    changeStatus}, dispatch)
+}
+
+export default connect(
+  ()=> {},
+  mapDispatchToProps
+)(TodoItem)
 
 
 

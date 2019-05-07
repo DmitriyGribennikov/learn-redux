@@ -1,12 +1,10 @@
 import React from "react";
-import { del, edit, changeStatus } from "../actions/TodoActions";
+
+//import { del, edit, changeStatus } from "../actions/TodoActions";     //Может раскоментить
 
 class Menu extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            menuId : ""
-        }
+    state = {
+        menuId: ""
     }
 
     handleClick = (e) => {
@@ -16,17 +14,17 @@ class Menu extends React.Component {
         switch (e.target.id) {
             case "Delet_ToDos":
             //console.log('del')
-                del( {title: this.state.item}
+            this.props.del( {title: this.state.item}
                 );
             break;
             case "Edit_ToDos":
             //console.log("edit")
-                edit( 2
+            this.props.edit( 2
                 );
             break;
             case "Done!":
             //console.log("done")
-                changeStatus( 3
+            this.props.changeStatus( 3
                 );
             break;
             default:

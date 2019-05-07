@@ -22,7 +22,7 @@ const defaultState = {
 // это замена сервера
 const generateTodoItem = (title, items) => {
   console.log("MainRed - funс generateTodoItem")
-   return({
+  return({
   id: items.length,
   title: title,
   status: STATUS_NOT_READY
@@ -52,14 +52,14 @@ const todoReducer = (state = defaultState, action) => {
               ...state, id: action.id
             };
         case EDIT_TODO:
-         console.log("MainRed - edit")
+        console.log("MainRed - edit")
             return {   
-
+              ...state, id: action.id
             };
         case CHANGE_STATUS_TODO:
-         console.log("MainRed - change")
+        console.log("MainRed - change")
             return {
-             
+              ...state, id: action.id
             };
         default: 
             return state;
