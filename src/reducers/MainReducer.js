@@ -21,7 +21,7 @@ const defaultState = {
 
 // это замена сервера
 const generateTodoItem = (title, items) => {
-  console.log("MainRed - funk generateTodoItem")
+  console.log("MainRed - funс generateTodoItem")
    return({
   id: items.length,
   title: title,
@@ -30,7 +30,7 @@ const generateTodoItem = (title, items) => {
 }
 
 // const delTodoItem = (title, items) => {
-//   console.log("MainRed - funk delTodoItem")
+//   console.log("MainRed - funс delTodoItem")
 //   return     
   
 // }
