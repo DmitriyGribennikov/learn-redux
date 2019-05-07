@@ -2,13 +2,9 @@ import React from "react";
 import { del, edit, changeStatus } from "../actions/TodoActions";
 
 class Menu extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            menuId : ""
-        }
+    state = {
+      menuId: ""
     }
-
     handleClick = (e) => {
         this.setState({
             menuId : e.target.id
@@ -16,7 +12,7 @@ class Menu extends React.Component {
         switch (e.target.id) {
             case "Delet_ToDos":
             //console.log('del')
-                del( {title: this.state.item}
+                this.props.del( {title: this.state.item}
                 );
             break;
             case "Edit_ToDos":
