@@ -29,9 +29,10 @@ class TodoItem extends React.Component {
   render() {
     const { item } = this.props;  
     //console.log (item)
-    return <li onClick = { this.handleClick}>   
+    return <li onClick = { this.handleClick} id = {item.id}>   
         { item.title } : { item.status }  
         <Menu 
+          id = {item.id}
           del={this.props.del}
           edit={this.props.edit}
           changeStatus={this.props.changeStatus}
@@ -48,7 +49,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-  ()=> {},
+  null,
   mapDispatchToProps
 )(TodoItem)
 

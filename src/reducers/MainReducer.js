@@ -21,43 +21,42 @@ const defaultState = {
 
 // это замена сервера
 const generateTodoItem = (title, items) => {
-  console.log("MainRed - funс generateTodoItem")
-  return({
-  id: items.length,
-  title: title,
-  status: STATUS_NOT_READY
-})
+  return{
+    id: items.length,
+    title: title,
+    status: STATUS_NOT_READY
+  }
 }
 
-// const delTodoItem = (title, items) => {
-//   console.log("MainRed - funс delTodoItem")
-//   return     
-  
-// }
+const delTodoItem = (state, action) => {  //Add search in obj by "id" and then delete thouse obj
+  // console.log(state.todos)
+  // console.log(action.data)
+  state.todos.splice(action.data, 1)
+  //console.log(state)
+  return state
+}
+
+const editTodoItem = (state, action) => {
+  return
+}
 
 // мы сразу вытащили из объекта action поля type & data при помощи деструкции
 //const todoReducer = (state = defaultState, action) => {
 const todoReducer = (state = defaultState, action) => {
     switch(action.type) {
-        case ADD_TODO: 
-        console.log("MainRed - add")           
+        case ADD_TODO:          
             return {
               ...state,
               //создаем новый массив todos в который вмерживаем старые элементы и новый который мы добавили
               todos: [...state.todos, generateTodoItem(action.data.title, state.todos)]
             };
         case DEL_TODO:
-        console.log("MainRed - del")
-            return {
-              ...state, id: action.id
-            };
+            return Object.assign({}, delTodoItem(state, action) );
         case EDIT_TODO:
-        console.log("MainRed - edit")
             return {   
               ...state, id: action.id
             };
         case CHANGE_STATUS_TODO:
-        console.log("MainRed - change")
             return {
               ...state, id: action.id
             };
