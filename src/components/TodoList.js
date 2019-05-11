@@ -35,7 +35,7 @@ class TodoList extends React.Component {
           TODO LIST:
           { todos.allIds.map(id => <TodoItem 
           key={id} 
-          item={todos.byIds[id]}
+          item={todos.byId[id]}
           del={del}
           edit={edit}
           changeStatus={changeStatus}

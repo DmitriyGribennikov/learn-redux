@@ -14,7 +14,7 @@ const firstUniqueId = uniqid();
 const defaultState = {
   todos: {
     byId: {
-      firstUniqueId: {
+      [firstUniqueId]: {
           id: firstUniqueId,
           title: 'wash a car',
           status: STATUS_NOT_READY
@@ -27,26 +27,17 @@ const defaultState = {
 
 // это замена сервера
 const generateTodoItem = (action, state) => {
-  console.log(state.todos)
-  return{
-    id: counter(),
+  return {
+    id: uniqid(),
     title: action.data.title,
     status: STATUS_NOT_READY
   }
 }
 
-const makeCounter = () => {
-  let currentCount = 1;
-  return () => {
-    return currentCount++;
-  };
-}
-
-const counter = makeCounter();
 
 const delTodoItem = (todos, id) => {
-  const elementIndex = todos.findIndex(todo => todo.id === id);
-  if(elementIndex) {
+  const elementIndex = todos.indexOf(id);
+  if(elementIndex !== -1) {
     const newTodos = [ ...todos];
     newTodos.splice(elementIndex, 1)
     return newTodos;
@@ -59,15 +50,26 @@ const editTodoItem = (state, action) => {
 
 const todoReducer = (state = defaultState, action) => {
     switch(action.type) {
-        case ADD_TODO:          
+        case ADD_TODO:
+            const newTodoItem = generateTodoItem(action, state);    
             return {
               ...state,
-              todos: [...state.todos, generateTodoItem(action, state)]
+              todos: {
+                byId: {
+                  ...state.todos.byId,
+                  [newTodoItem.id]: newTodoItem
+                },
+                allIds: [...state.todos.allIds, newTodoItem.id]
+              }
             };
         case DEL_TODO:
             return {
               ...state,
-              todos: delTodoItem(state.todos, action.data)
+              todos: {
+                  ...state.todos,
+                allIds: delTodoItem(state.todos.allIds, action.data),
+              },
+              activeTodoItem: null
             }
 
         case EDIT_TODO:

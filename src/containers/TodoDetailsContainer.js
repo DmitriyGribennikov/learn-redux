@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux'
 import TodoDetailsView from '../components/TodoDetailsView';
 import * as TodoActions from '../actions/TodoActions';
 
-const mapStateToProps = state => {    
+const mapStateToProps = state => {   
+    const {todoReducer: {activeTodoItem, todos: {byId}}} = state;
+    console.log(byId, activeTodoItem)
     return {
-      activeTodoItem: state.todoReducer.activeTodoItem
+      item: byId[activeTodoItem]
     }
 }
   

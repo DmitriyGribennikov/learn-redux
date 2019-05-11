@@ -8,6 +8,7 @@ class Menu extends React.Component {
     }
 
     handleClick = (e) => {
+        e.stopPropagation();
         this.setState({
             menuId : e.target.id
         })
