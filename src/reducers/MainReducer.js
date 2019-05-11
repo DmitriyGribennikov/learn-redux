@@ -1,22 +1,28 @@
 import { combineReducers } from 'redux';
+import uniqid from 'uniqid';
 import {
   ADD_TODO,
   DEL_TODO,
   EDIT_TODO,
-  CHANGE_STATUS_TODO
+  CHANGE_STATUS_TODO,
+  OPEN_DETAILS_VIEW
 } from '../constants/TodoConstants';
 
 const STATUS_NOT_READY = `Not ready`;
-const STATUS_DONE = `Done`;
-
+//const STATUS_DONE = `Done`;
+const firstUniqueId = uniqid();
 const defaultState = {
-  todos: [
-    {
-      id: 0,
-      title: 'wash a car',
-      status: STATUS_NOT_READY
-    }
-  ]
+  todos: {
+    byId: {
+      firstUniqueId: {
+          id: firstUniqueId,
+          title: 'wash a car',
+          status: STATUS_NOT_READY
+      }  
+    },
+    allIds: [firstUniqueId]
+  },
+  activeTodoItem: null
 }
 
 // это замена сервера
@@ -63,17 +69,19 @@ const todoReducer = (state = defaultState, action) => {
               ...state,
               todos: delTodoItem(state.todos, action.data)
             }
+
         case EDIT_TODO:
             return {   
-              ...state, id: action.id
             };
-        case CHANGE_STATUS_TODO:  ///дОПИСАТЬ выбор тудуса по айдишнику и изменение статуса.
-            //console.log(action.data)
-            //console.log(state.todos.status === STATUS_NOT_READY ? state.todos.status = STATUS_DONE : state.todos.status = STATUS_NOT_READY)
-            //console.log(state.todos.status)
+        case CHANGE_STATUS_TODO:
             editTodoItem(state, action)
-            // return {
-            // };
+            return {
+            };
+        case OPEN_DETAILS_VIEW: 
+            return {
+              ...state,
+              activeTodoItem: action.data
+            };
         default: 
             return state;
     }

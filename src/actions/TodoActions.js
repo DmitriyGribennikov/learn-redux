@@ -2,7 +2,8 @@ import {
     ADD_TODO,
     DEL_TODO,
     EDIT_TODO,
-    CHANGE_STATUS_TODO
+    CHANGE_STATUS_TODO,
+    OPEN_DETAILS_VIEW
 } from '../constants/TodoConstants';
 
 export const add = (todoItem) => {
@@ -12,10 +13,10 @@ export const add = (todoItem) => {
     }
 }
 
-export const del = (todoItem) => {
+export const del = (itemId) => {
     return {
         type: DEL_TODO,
-        data : todoItem
+        data : itemId
     }
 }
 
@@ -30,5 +31,12 @@ export const changeStatus = (todoItem) => {
     return {
         type: CHANGE_STATUS_TODO,
         data: todoItem
+    }
+}
+
+export const openDetailsView = (itemId) => {
+    return {
+        type: OPEN_DETAILS_VIEW,
+        data: itemId
     }
 }

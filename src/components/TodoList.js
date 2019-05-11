@@ -9,7 +9,7 @@ import styles from './todolist.scss';
 class TodoList extends React.Component {
 
   state = {
-      item: ''
+    item: ''
   };  
 
   handleChange = (e) => {
@@ -28,15 +28,23 @@ class TodoList extends React.Component {
   }
 
   render() {
-    const { todos } = this.props;
+    const { todos, del, edit, changeStatus, openDetailsView } = this.props;
+    console.log(this.props)
     return <div>
-        <ol className="todolist">
-            TODO LIST:
-            { todos.map(todoItem => <TodoItem key={todoItem.id} item={todoItem} />) }
-        </ol>
-        <br />
-        <input type='text' placeholder="type your todos heare" value={this.state.item} onChange={this.handleChange}/>
-        <button onClick={this.handleClick}>Add Todo Item </button>
+      <ol className="todolist">
+          TODO LIST:
+          { todos.allIds.map(id => <TodoItem 
+          key={id} 
+          item={todos.byIds[id]}
+          del={del}
+          edit={edit}
+          changeStatus={changeStatus}
+          openDetailsView={openDetailsView}
+        />) }
+      </ol>
+      <br />
+      <input type='text' placeholder="type your todos heare" value={this.state.item} onChange={this.handleChange}/>
+      <button onClick={this.handleClick}>Add Todo Item </button>
     </div>
   }
 }

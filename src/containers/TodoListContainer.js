@@ -2,12 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TodoList from '../components/TodoList';
-// import {
-//     add,
-//     del,
-//     edit,
-//     changeStatus
-// } from '../actions/TodoActions';
 import * as TodoActions from '../actions/TodoActions';
 
 // Container component - вся его задача - это только подключиться к Store c помощью connect, взять 
