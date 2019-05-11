@@ -6,9 +6,9 @@ import {
   CHANGE_STATUS_TODO
 } from '../constants/TodoConstants';
 
-const STATUS_NOT_READY = 0;
-// const STATUS_DONE = 1;
-// const STATUS_IN_PROCESS = 2;
+const STATUS_NOT_READY = `Not ready`;
+const STATUS_DONE = `Done`;
+
 const defaultState = {
   todos: [
     {
@@ -20,46 +20,60 @@ const defaultState = {
 }
 
 // это замена сервера
-const generateTodoItem = (title, items) => {
+const generateTodoItem = (action, state) => {
+  console.log(state.todos)
   return{
-    id: items.length,
-    title: title,
+    id: counter(),
+    title: action.data.title,
     status: STATUS_NOT_READY
   }
 }
 
-const delTodoItem = (state, action) => {  //Add search in obj by "id" and then delete thouse obj
-  // console.log(state.todos)
-  // console.log(action.data)
-  state.todos.splice(action.data, 1)
-  //console.log(state)
-  return state
+const makeCounter = () => {
+  let currentCount = 1;
+  return () => {
+    return currentCount++;
+  };
+}
+
+const counter = makeCounter();
+
+const delTodoItem = (todos, id) => {
+  const elementIndex = todos.findIndex(todo => todo.id === id);
+  if(elementIndex) {
+    const newTodos = [ ...todos];
+    newTodos.splice(elementIndex, 1)
+    return newTodos;
+  }
+  return todos;
 }
 
 const editTodoItem = (state, action) => {
-  return
 }
 
-// мы сразу вытащили из объекта action поля type & data при помощи деструкции
-//const todoReducer = (state = defaultState, action) => {
 const todoReducer = (state = defaultState, action) => {
     switch(action.type) {
         case ADD_TODO:          
             return {
               ...state,
-              //создаем новый массив todos в который вмерживаем старые элементы и новый который мы добавили
-              todos: [...state.todos, generateTodoItem(action.data.title, state.todos)]
+              todos: [...state.todos, generateTodoItem(action, state)]
             };
         case DEL_TODO:
-            return Object.assign({}, delTodoItem(state, action) );
+            return {
+              ...state,
+              todos: delTodoItem(state.todos, action.data)
+            }
         case EDIT_TODO:
             return {   
               ...state, id: action.id
             };
-        case CHANGE_STATUS_TODO:
-            return {
-              ...state, id: action.id
-            };
+        case CHANGE_STATUS_TODO:  ///дОПИСАТЬ выбор тудуса по айдишнику и изменение статуса.
+            //console.log(action.data)
+            //console.log(state.todos.status === STATUS_NOT_READY ? state.todos.status = STATUS_DONE : state.todos.status = STATUS_NOT_READY)
+            //console.log(state.todos.status)
+            editTodoItem(state, action)
+            // return {
+            // };
         default: 
             return state;
     }

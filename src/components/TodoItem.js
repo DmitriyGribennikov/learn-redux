@@ -33,6 +33,7 @@ class TodoItem extends React.Component {
         { item.title } : { item.status }  
         <Menu 
           id = {item.id}
+          status = {item.status}
           del={this.props.del}
           edit={this.props.edit}
           changeStatus={this.props.changeStatus}

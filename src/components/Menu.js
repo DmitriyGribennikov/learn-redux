@@ -13,16 +13,13 @@ class Menu extends React.Component {
         })
         switch (e.target.id) {
             case "Delet_ToDos":
-            //console.log( this.props.id )
             this.props.del( this.props.id );
             break;
             case "Edit_ToDos":
-            this.props.edit( 2
-                );
+            this.props.edit( this.props.id );
             break;
             case "Done!":
-            this.props.changeStatus( 3
-                );
+            this.props.changeStatus( this.props.id );
             break;
             default:
                 return this.state;
