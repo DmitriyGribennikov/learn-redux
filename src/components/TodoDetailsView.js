@@ -2,13 +2,12 @@ import React from  'react';
 // eslint-disable-next-line
 import styles from './TodoDetailsView.scss';
 
-
 class TodoDetailsView extends React.Component {
   state = {
     isEditPathVisible: false,
     isEditButtonVisible: true,
     titleForUpdate: "",
-    newStatus: "",
+    newStatusValue: "Not ready",
     details: ""
   }
   handleChange = (e) => {
@@ -17,13 +16,13 @@ class TodoDetailsView extends React.Component {
   handleClick = (e) => {
     e.stopPropagation();
     switch(e.target.value) {
-      case "1":
+      case "1"://Edit
         this.setState({
           isEditPathVisible: !this.state.isEditPathVisible,
           isEditButtonVisible: !this.state.isEditButtonVisible
         })
         break
-      case "2":
+      case "2"://Confirm
         if (this.state.titleForUpdate) {
           {this.props.item.title = this.state.titleForUpdate}   //почему тут равно???
         }
@@ -34,27 +33,40 @@ class TodoDetailsView extends React.Component {
           isEditPathVisible: !this.state.isEditPathVisible,
           isEditButtonVisible: !this.state.isEditButtonVisible
         })
-        console.log(this.state.titleForUpdate)
       break
-      case "3":
+      case "3"://Cancel
         this.setState({
           isEditPathVisible: !this.state.isEditPathVisible,
           isEditButtonVisible: !this.state.isEditButtonVisible,
           titleForUpdate: ""
         })
       break;
-      case "4":
+      case "4"://Update
         console.log("Update")
       break;
       default:
         break
     }
   }
+  handleNewStatus = (e) => {
+    console.log(this.state.newStatusValue)
+    console.log(this.props.item.status)
+    if (this.state.newStatusValue !== e.target.value) {
+      this.setState({
+        newStatusValue: e.target.value
+      })
+      console.log(this.state.newStatusValue) // Не корректно отображается в прриходящемзначении статуса
+      this.props.item.status = this.state.newStatusValue
+      console.log(this.props.item.status)
+    }
+  }
   render() {
-    const { isEditPathVisible, isEditButtonVisible } = this.state;
+    const { isEditPathVisible, isEditButtonVisible, newStatusValue } = this.state;
     const { item } = this.props;
+    
     if (!item) {
       return <div> Nothing selected</div>
+      console.log(item.status)
     }
     return <div className = "component-cotainer">
       active todo item: {item.title} 
@@ -93,10 +105,10 @@ class TodoDetailsView extends React.Component {
       </div>
       <div> 
         New status: 
-        <select>
-          <option value="done">Done</option>
-          <option value="in processe">In process</option>
-          <option  value="not ready">Not ready</option>
+        <select value = {newStatusValue} onChange = {this.handleNewStatus}>
+          <option value = "done">Done</option>
+          <option value = "in processe">In process</option>
+          <option value = "not ready">Not ready</option>
         </select>
       </div>
       <div>
