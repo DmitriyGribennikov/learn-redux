@@ -24,7 +24,7 @@ class TodoDetailsView extends React.Component {
         break
       case "2"://Confirm
         if (this.state.titleForUpdate) {
-          {this.props.item.title = this.state.titleForUpdate}   //почему тут равно???
+          this.props.item.title = this.state.titleForUpdate   //почему тут равно???
         }
       this.setState({
         titleForUpdate: ""
@@ -55,7 +55,7 @@ class TodoDetailsView extends React.Component {
       this.setState({
         newStatusValue: e.target.value
       })
-      console.log(this.state.newStatusValue) // Не корректно отображается в прриходящемзначении статуса
+      console.log(this.state.newStatusValue) // Не корректно отображается в приходящем значении статуса
       this.props.item.status = this.state.newStatusValue
       console.log(this.props.item.status)
     }
@@ -66,7 +66,6 @@ class TodoDetailsView extends React.Component {
     
     if (!item) {
       return <div> Nothing selected</div>
-      console.log(item.status)
     }
     return <div className = "component-cotainer">
       active todo item: {item.title} 
@@ -105,7 +104,9 @@ class TodoDetailsView extends React.Component {
       </div>
       <div> 
         New status: 
-        <select value = {newStatusValue} onChange = {this.handleNewStatus}>
+        <select 
+          value = {newStatusValue} 
+          onChange = {this.handleNewStatus}>
           <option value = "done">Done</option>
           <option value = "in processe">In process</option>
           <option value = "not ready">Not ready</option>
