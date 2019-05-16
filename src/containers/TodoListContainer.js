@@ -4,22 +4,15 @@ import { bindActionCreators } from 'redux'
 import TodoList from '../components/TodoList';
 import * as TodoActions from '../actions/TodoActions';
 
-// Container component - вся его задача - это только подключиться к Store c помощью connect, взять 
-// данные и передать ниже по дереву компонентов. он не отрисовывает ничего!!!
 const mapStateToProps = state => {    
-    return {
-        todos: state.todoReducer.todos
-    }
+  return {
+    todos: state.todoReducer.todos
+  }
 }
   
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators(
-      TodoActions, dispatch)
-    // return {
-    //    (data) => {
-    //     dispatch(TodoActions(data))
-    //   }
-    // }
+  return bindActionCreators(
+    TodoActions, dispatch)
 }
 
 class TodoListContainer extends React.Component {

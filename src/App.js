@@ -2,7 +2,7 @@ import React from 'react';
 import TodoListContainer from './containers/TodoListContainer';
 import TodoDetailsContainer from './containers/TodoDetailsContainer';
 // eslint-disable-next-line
-import styles from './app.scss';
+import styles from './styles/app.scss';
 class App extends React.Component {
   render() {
     return <div className='todo-root'>

@@ -6,7 +6,7 @@ import * as TodoActions from '../actions/TodoActions';
 
 const mapStateToProps = state => {   
     const {todoReducer: {activeTodoItem, todos: {byId}}} = state;
-    console.log(byId, activeTodoItem)
+    //console.log(byId, activeTodoItem)
     return {
       item: byId[activeTodoItem]
     }
