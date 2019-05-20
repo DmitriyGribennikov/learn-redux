@@ -16,7 +16,9 @@ const mapDispatchToProps = dispatch => {
 }
 
 class TodoListContainer extends React.Component {
+  
   render() {
+    console.log(this.props.todos )
     return <TodoList {...this.props}/>
   }
 }

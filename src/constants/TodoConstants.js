@@ -4,4 +4,5 @@ export const EDIT_TODO = "EDIT_TODO";
 export const CHANGE_STATUS_TODO = "CHANGE_STATUS_TODO";
 export const OPEN_DETAILS_VIEW = "OPEN_DETAILS_VIEW";
 export const UPDATE = "UPDATE";
+export const CLOSEDET = "CLOSEDET";
 

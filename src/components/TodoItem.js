@@ -16,6 +16,7 @@ class TodoItem extends React.Component {
       { item.title } : { item.status }  
       { isMenuVisible && <Menu 
         id = {item.id}
+        openerCloser = { this.props.openerCloser}
         status = {item.status}
         del={this.props.del}
         edit={this.props.edit}

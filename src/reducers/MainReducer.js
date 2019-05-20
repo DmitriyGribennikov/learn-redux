@@ -6,7 +6,8 @@ import {
   EDIT_TODO,
   CHANGE_STATUS_TODO,
   OPEN_DETAILS_VIEW,
-  UPDATE
+  UPDATE,
+  CLOSEDET
 } from '../constants/TodoConstants';
 
 const STATUS_NOT_READY = `Not ready`;
@@ -30,10 +31,10 @@ const defaultState = {
 // это замена сервера
 const generateTodoItem = (action) => {
   return {
-    id: uniqid(),
-    title: action.data.title,
-    status: STATUS_NOT_READY,
-    details: "empty"
+    id: action.data.id ? action.data.id : uniqid(),
+    title: action.data.newTitle ? action.data.newTitle : action.data.title,
+    status: action.data.status ? action.data.status : STATUS_NOT_READY,
+    details: action.data.details ? action.data.details : "empty"
   }
 }
 const delTodoItem = (todos, id) => {
@@ -83,8 +84,22 @@ const todoReducer = (state = defaultState, action) => {
         activeTodoItem: action.data
       };
     case UPDATE:
-      console.log("in redecer")
-      break
+      return {
+        ...state,
+        todos: {
+          byId: {
+            ...state.todos.byId,
+            [action.data.id]: generateTodoItem(action)
+          },
+          allIds: [...state.todos.allIds]
+        },
+        activeTodoItem: null
+      };
+    case CLOSEDET:
+      return {
+        ...state,
+        activeTodoItem: null
+      }
     default: 
       return state;
   }

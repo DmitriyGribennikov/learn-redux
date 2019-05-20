@@ -20,19 +20,38 @@ class TodoDetailsView extends React.Component {
   handleDetails = (e) => {
     this.setState({details: e.target.value})
   }
-
+  handleNewStatus = (e) => {
+    if (this.state.newStatusValue !== e.target.value) {
+      this.setState({
+        newStatusValue: e.target.value
+      })
+    }
+  }
   handleClick = (e) => {
     e.stopPropagation();
     const reversVisibleTitlePath = () => {
-      this.setState({
+      return this.setState({
         isEditPathVisible: !this.state.isEditPathVisible,
         isEditButtonVisible: !this.state.isEditButtonVisible
       })
     }
     const reversVisibleDetailsPath = () => {
-      this.setState({
+      return this.setState({
         isEditPathDetailsVisible: !this.state.isEditPathDetailsVisible,
         isEditButtonDetailsVisible: !this.state.isEditButtonDetailsVisible
+      })
+    }
+    const resetState = () => {
+      return this.setState({
+        isEditPathVisible: false,
+        isEditButtonVisible: true,
+        isEditPathDetailsVisible: false,
+        isEditButtonDetailsVisible: true,
+        titleForUpdate: "",
+        newTitle: "",
+        newStatusValue: "",
+        details: "",
+        newDetails:""
       })
     }
     switch(e.target.value) {
@@ -55,7 +74,17 @@ class TodoDetailsView extends React.Component {
         })
         break;
       case "Update"://Update
-        this.props.update( "Something send" );
+      // console.log("state:", this.state.newDetails)
+      // console.log("props:", this.props.item.details)
+        let newData = {
+          details:  this.state.newDetails ? this.state.newDetails : this.props.item.details,
+          newTitle: this.state.newTitle ? this.state.newTitle : this.props.item.title,
+          status:   this.state.newStatusValue ? this.state.newStatusValue : this.props.item.status,
+          id:       this.props.item.id
+        }
+        // console.log("resalt:", newData.details)
+        this.props.update(newData);
+        resetState();
         break;
       case "Edit_details":
         reversVisibleDetailsPath();
@@ -76,29 +105,17 @@ class TodoDetailsView extends React.Component {
         })
         break;
       case "Reset":
-        this.setState({
-          isEditPathVisible: false,
-          isEditButtonVisible: true,
-          isEditPathDetailsVisible: false,
-          isEditButtonDetailsVisible: true,
-          titleForUpdate: "",
-          newTitle: "",
-          newStatusValue: "",
-          details: "",
-          newDetails:""
-        })
+        resetState()
+        break;
+      case "Close details":
+          this.props.closeDet();
+          resetState();
         break;
       default:
         break
     }
   }
-  handleNewStatus = (e) => {
-    if (this.state.newStatusValue !== e.target.value) {
-      this.setState({
-        newStatusValue: e.target.value
-      })
-    }
-  }
+
   render() {
     const { //Переменные для короткого обпращения в рендере
       isEditPathVisible, 
@@ -113,6 +130,8 @@ class TodoDetailsView extends React.Component {
     if (!item) {
       return <div> Nothing selected</div>
     }
+    console.log("item-object:", item)
+    console.log("state:", this.state)
     return <div className = "component-cotainer">
       {//Если Новое значение тайтла не введено - используется значение из пропса
       }
@@ -196,7 +215,6 @@ class TodoDetailsView extends React.Component {
           </div>
         </div> }
         <br />
-
       </div>
       <button 
         className = "btn update" 
@@ -211,6 +229,13 @@ class TodoDetailsView extends React.Component {
         onClick = {this.handleClick} 
         value = "Reset">
         Reset changes
+      </button>
+      <button 
+        className = "btn update" 
+        type="submit"
+        onClick = {this.handleClick} 
+        value = "Close details">
+        Close details
       </button>
     </div>
   }
