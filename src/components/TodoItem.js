@@ -1,17 +1,20 @@
 import React from  'react';
-import Menu from './Menu'
+import Menu from './Menu';
+import {withRouter} from 'react-router-dom';
 class TodoItem extends React.Component {
   state = {
     isMenuVisible: false
   }
   handleClick = () => {
-    const { openDetailsView, item: { id } } = this.props;
+    const { openDetailsView, item: { id }, history } = this.props;
     this.setState({isMenuVisible: !this.state.isMenuVisible})
     openDetailsView(id);
+    history.push(`/todo-item/${id}`);
   }
   render() {
     const { item } = this.props;
     const { isMenuVisible } = this.state;
+    console.log('here', this.props)
     return <li onClick = { this.handleClick} id = {item.id}>   
       { item.title } : { item.status }  
       { isMenuVisible && <Menu 
@@ -27,7 +30,7 @@ class TodoItem extends React.Component {
   }
 }
 
-export default TodoItem;
+export default withRouter(TodoItem);
 
 
 

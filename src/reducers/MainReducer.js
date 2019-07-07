@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form'
 import uniqid from 'uniqid';
 import {
   ADD_TODO,
@@ -17,14 +18,14 @@ const firstUniqueId = uniqid();
 const defaultState = {
   todos: {
     byId: {
-      [firstUniqueId]: {
-          id: firstUniqueId,
+      [1]: {
+          id: 1,
           title: 'wash a car', 
           status: STATUS_NOT_READY,
           details: "empty"
       }  
     },
-    allIds: [firstUniqueId]
+     allIds: [1]
   },
   activeTodoItem: null
 }
@@ -80,8 +81,7 @@ const todoReducer = (state = defaultState, action) => {
       };
     case OPEN_DETAILS_VIEW: 
       return {
-        ...state,
-        activeTodoItem: action.data
+        ...state
       };
     case UPDATE:
       return {
@@ -105,7 +105,8 @@ const todoReducer = (state = defaultState, action) => {
   }
 }
 const todoApp = combineReducers({
-  todoReducer
+  todoReducer,
+  form: formReducer
 })
 
 export default todoApp

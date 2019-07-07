@@ -1,14 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import TodoDetailsView from '../components/TodoDetailsView';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
+import TodoForm from '../components/TodoDetailsView';
 import * as TodoActions from '../actions/TodoActions';
 
-const mapStateToProps = state => {   
-    const {todoReducer: {activeTodoItem, todos: {byId}}} = state;
-    //console.log(byId, activeTodoItem)
+const mapStateToProps = (state, router) => {   
+    const {todoReducer: { todos: {byId}}} = state;
     return {
-      item: byId[activeTodoItem]
+      item: byId[router.match.params.id]
     }
 }
   
@@ -19,11 +19,15 @@ const mapDispatchToProps = dispatch => {
 
 class TodoDetailsContainer extends React.Component {
   render() {
-    return <TodoDetailsView {...this.props}/>
+    return <TodoForm {...this.props}/>
   }
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps
 )(TodoDetailsContainer)
+
+
+
+export default withRouter(withConnect)

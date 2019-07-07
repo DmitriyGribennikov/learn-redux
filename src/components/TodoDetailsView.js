@@ -1,8 +1,12 @@
 import React from  'react';
+import {Link} from 'react-router-dom';
+import Modal from './Modal';
+import { reduxForm, Field, FormSection } from 'redux-form';
+
 // eslint-disable-next-line
 import styles from '../styles/TodoDetailsView.scss';
-
-class TodoDetailsView extends React.Component {
+ const formName = 'TODO_DETAILS_FORM';
+class TodoForm extends React.Component {
   state = {
     isEditPathVisible: false,
     isEditButtonVisible: true,
@@ -12,7 +16,8 @@ class TodoDetailsView extends React.Component {
     newTitle: "",
     newStatusValue: "",
     details: "",
-    newDetails:""
+    newDetails:"",
+    isEditDetailsModalOpen: false
   }
   handleChange = (e) => {
     this.setState({titleForUpdate: e.target.value})
@@ -74,15 +79,12 @@ class TodoDetailsView extends React.Component {
         })
         break;
       case "Update"://Update
-      // console.log("state:", this.state.newDetails)
-      // console.log("props:", this.props.item.details)
         let newData = {
           details:  this.state.newDetails ? this.state.newDetails : this.props.item.details,
           newTitle: this.state.newTitle ? this.state.newTitle : this.props.item.title,
           status:   this.state.newStatusValue ? this.state.newStatusValue : this.props.item.status,
           id:       this.props.item.id
         }
-        // console.log("resalt:", newData.details)
         this.props.update(newData);
         resetState();
         break;
@@ -116,6 +118,9 @@ class TodoDetailsView extends React.Component {
     }
   }
 
+  handleClickEditDetails = () => {
+    this.setState({isEditDetailsModalOpen: !this.state.isEditDetailsModalOpen})
+  }
   render() {
     const { //Переменные для короткого обпращения в рендере
       isEditPathVisible, 
@@ -130,8 +135,6 @@ class TodoDetailsView extends React.Component {
     if (!item) {
       return <div> Nothing selected</div>
     }
-    console.log("item-object:", item)
-    console.log("state:", this.state)
     return <div className = "component-cotainer">
       {//Если Новое значение тайтла не введено - используется значение из пропса
       }
@@ -186,59 +189,49 @@ class TodoDetailsView extends React.Component {
         { //Вкл/выкл видимости кнопки редактирования блока
           isEditButtonDetailsVisible && <button 
         className = "btn edit"
-        onClick = {this.handleClick} 
+        onClick = {this.handleClickEditDetails} 
         value = "Edit_details">
         Edit
         </button> }
-        { //Вкл/выкл видимости блока 
-          isEditPathDetailsVisible && <div className="edit-block">
-        <textarea
-        rows = "5"
-        onChange = {this.handleDetails}
-        placeholder = "If you need? you can type details heare">
-        </textarea>
-          <div className = "btn-container">
-            <button 
-              className = "btn conf" 
-              type="submit"
-              onClick = {this.handleClick} 
-              value = "Confirm_details">
-              Confirm
-            </button>
-            <button 
-              className = "btn canc"
-              type="reset"
-              onClick = {this.handleClick} 
-              value = "Cancel_details">
-              Cancel
-            </button>
-          </div>
-        </div> }
         <br />
       </div>
       <button 
         className = "btn update" 
-        type="submit"
         onClick = {this.handleClick} 
         value = "Update">
         Update
       </button>
       <button 
-        className = "btn update" 
-        type="submit"
+        className = "btn update"
         onClick = {this.handleClick} 
         value = "Reset">
         Reset changes
       </button>
-      <button 
-        className = "btn update" 
-        type="submit"
-        onClick = {this.handleClick} 
-        value = "Close details">
-        Close details
-      </button>
+      <Link to='/'>
+        <button 
+          className = "btn update"
+          value = "Close details">
+          Close details
+        </button>
+      </Link>
+      <form>
+        <Modal
+          onSubmit={() => {}}
+          onCancel={() => this.props.resetSection(formName, 'modal')}
+          visible={this.state.isEditDetailsModalOpen}
+        >
+            <Field
+                component="input" 
+                type="text"
+                name="details"
+            />
+        </Modal>
+      </form>
     </div>
   }
 }
 
-export default TodoDetailsView;
+
+export default reduxForm({  
+  form: formName, 
+})(TodoForm);
